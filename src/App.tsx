@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "./lib/supabase";
 
 /* ============================================================
    ELIANE LAMARQUE — Landing Page Premium · Layout Centrado
@@ -160,15 +161,33 @@ export default function App() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
+
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          {
+            nome: form.name,
+            telefone: form.phone,
+            email: form.email,
+            interesse: form.interest
+          }
+        ]);
+
+      if (error) throw error;
+
       setSent(true);
       setForm({ name: "", phone: "", email: "", interest: "comprar" });
       setTimeout(() => setSent(false), 4000);
-    }, 1500);
+    } catch (err) {
+      console.error('Erro ao salvar lead:', err);
+      // Opcional: Adicionar um toast de erro aqui se desejar
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
