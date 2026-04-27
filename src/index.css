@@ -61,3 +61,15 @@
 .animate-glow-rotate {
     animation: glow-rotate var(--duration, 3s) linear infinite;
 }
+@keyframes lustre {
+    0% {
+        transform: translateX(-200%) skewX(-20deg);
+    }
+    50%, 100% {
+        transform: translateX(200%) skewX(-20deg);
+    }
+}
+
+.animate-lustre {
+    animation: lustre 3s linear infinite;
+}

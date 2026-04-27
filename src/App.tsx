@@ -2,6 +2,11 @@ import { useState } from "react";
 import { supabase } from "./lib/supabase";
 import { CardContainer, CardBody, CardItem } from "./components/ui/3d-card";
 import { GlowBorder } from "./components/ui/glow-border";
+import {
+  Announcement,
+  AnnouncementTag,
+  AnnouncementTitle,
+} from "./components/ui/announcement";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -477,15 +482,19 @@ export default function App() {
                         <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
                       </CardItem>
 
-                      {/* Nome e informações com profundidade média */}
-                      <CardItem translateZ="60">
-                        <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>
-                        <p className="mt-1 text-[12px] font-bold tracking-[0.2em] uppercase" style={{ color: "#e8a020" }}>
-                          Consultora Imobiliária
-                        </p>
-                        <a href={callUrl} className="mt-2 block text-[17px] font-extrabold text-white/95 hover:text-white transition-colors">
-                          +351 913 663 154
-                        </a>
+                      {/* Nome e informações com profundidade média - Agora com efeito Announcement e Moving Border */}
+                      <CardItem translateZ="60" className="flex justify-center">
+                        <Announcement movingBorder className="min-w-[280px]">
+                          <AnnouncementTitle>
+                            <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>
+                          </AnnouncementTitle>
+                          <AnnouncementTag lustre>
+                            Consultora Imobiliária
+                          </AnnouncementTag>
+                          <a href={callUrl} className="mt-1 block text-[17px] font-extrabold text-white/95 hover:text-white transition-colors">
+                            +351 913 663 154
+                          </a>
+                        </Announcement>
                       </CardItem>
 
                       {/* Botões com profundidade menor para efeito de camadas */}
