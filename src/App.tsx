@@ -155,10 +155,26 @@ function Toast({ visible }: { visible: boolean }) {
 // ── Floating Social ──────────────────────────────────────── */
 function FloatingSocials() {
   const socials = [
-    { icon: <FacebookIcon className="h-5 w-5" />, url: "https://www.facebook.com/share/18oqgRVXVG/" },
-    { icon: <InstagramIcon className="h-5 w-5" />, url: "https://www.instagram.com/ecristinalamarque?igsh=MTEwYnFyenBhdGZhaA==" },
-    { icon: <MailIcon className="h-5 w-5" />, url: "mailto:elianelamarque@remax.pt" },
-    { icon: <GlobeIcon className="h-5 w-5" />, url: "https://remax.pt/pt/agente/eliane-lamarque/126421029" },
+    {
+      icon: <FacebookIcon className="h-5 w-5" />,
+      url: "https://www.facebook.com/share/18oqgRVXVG/",
+      msg: "Acompanhe as melhores oportunidades de investimento!"
+    },
+    {
+      icon: <InstagramIcon className="h-5 w-5" />,
+      url: "https://www.instagram.com/ecristinalamarque?igsh=MTEwYnFyenBhdGZhaA==",
+      msg: "Dicas exclusivas e imóveis de alto luxo diariamente."
+    },
+    {
+      icon: <MailIcon className="h-5 w-5" />,
+      url: "mailto:elianelamarque@remax.pt",
+      msg: "Peça agora uma análise de mercado personalizada."
+    },
+    {
+      icon: <GlobeIcon className="h-5 w-5" />,
+      url: "https://remax.pt/pt/agente/eliane-lamarque/126421029",
+      msg: "Veja o meu portfólio completo na RE/MAX."
+    },
   ];
 
   return (
@@ -169,7 +185,7 @@ function FloatingSocials() {
           href={s.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-120"
+          className="group relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-120"
           style={{
             background: "rgba(255,255,255,0.05)",
             border: "1px solid rgba(255,255,255,0.1)",
@@ -177,8 +193,29 @@ function FloatingSocials() {
             animation: `float ${4 + i * 0.5}s ease-in-out infinite`,
           }}
         >
+          {/* Ícone principal */}
           <div className="text-white/40 group-hover:text-white transition-colors">
             {s.icon}
+          </div>
+
+          {/* Tooltip Inteligente (Mensagem + Foto) */}
+          <div className="absolute left-14 top-1/2 -translate-y-1/2 flex items-center gap-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0 w-[240px] pointer-events-none">
+            <div className="relative flex items-center gap-3 rounded-2xl p-2.5 shadow-2xl backdrop-blur-xl border border-white/15"
+              style={{ background: "rgba(10,20,58,0.95)" }}>
+              {/* Miniatura Eliane */}
+              <img
+                src="/images/eliane-hq.png"
+                className="h-9 w-9 flex-shrink-0 rounded-full object-cover border border-white/20 bg-[#003087]"
+                alt="Eliane"
+              />
+              {/* Texto com mensagem de vendas */}
+              <div className="flex flex-col text-left">
+                <span className="text-[10px] font-bold text-[#e8a020] uppercase tracking-wider mb-0.5">Eliane Lamarque</span>
+                <span className="text-[11px] font-medium leading-tight text-white/90">{s.msg}</span>
+              </div>
+              {/* Triângulo indicador do tooltip */}
+              <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-white/15" />
+            </div>
           </div>
         </a>
       ))}
