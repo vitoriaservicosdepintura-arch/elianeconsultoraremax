@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { supabase } from "./lib/supabase";
 import { CardContainer, CardBody, CardItem } from "./components/ui/3d-card";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 /* ============================================================
    ELIANE LAMARQUE — Landing Page Premium · Layout Centrado
@@ -176,6 +182,89 @@ function FloatingSocials() {
         </a>
       ))}
     </div>
+  );
+}
+
+// ── Marquee Component ────────────────────────────────────── */
+function Marquee({
+  className,
+  reverse,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: {
+  className?: string;
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children?: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
+  [key: string]: any;
+}) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
+          "flex-col": vertical,
+        },
+        className,
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
+              "animate-marquee flex-row": !vertical,
+              "animate-marquee-vertical flex-col": vertical,
+              "reverse [animation-direction:reverse]": reverse,
+              "pause-on-hover": pauseOnHover,
+            })}
+          >
+            {children}
+          </div>
+        ))}
+    </div>
+  );
+}
+
+function ReviewCard({
+  img,
+  name,
+  username,
+  body,
+}: {
+  img: string;
+  name: string;
+  username: string;
+  body: string;
+}) {
+  return (
+    <figure
+      className={cn(
+        "relative w-[300px] cursor-pointer overflow-hidden rounded-2xl p-4",
+        "border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/11 transition-colors",
+      )}
+    >
+      <div className="flex flex-row items-center gap-3">
+        <img className="rounded-full bg-white/10" width="40" height="40" alt={name} src={img} />
+        <div className="flex flex-col text-left">
+          <figcaption className="text-[14px] font-bold text-white">
+            {name}
+          </figcaption>
+          <p className="text-[11px] font-medium text-white/40">{username}</p>
+        </div>
+      </div>
+      <blockquote className="mt-3 text-[13px] leading-relaxed text-white/70 text-left line-clamp-3">
+        "{body}"
+      </blockquote>
+    </figure>
   );
 }
 
@@ -458,11 +547,35 @@ export default function App() {
             </div>
           </section>
 
-          {/* ── DEPOIMENTOS ─────────────────────────────── */}
-          <section className="mt-6 space-y-3">
-            <h3 className="text-center text-[13px] font-black tracking-widest uppercase text-white/50">O que dizem os clientes</h3>
-            <Testimonial name="Maria F., Lisboa" text="Excelente profissional, dedicada e muito transparente. Transmitiu-nos total confiança e segurança desde o primeiro dia!" />
-            <Testimonial name="João R., Porto" text="Profissionalismo acima de qualquer expectativa. Recomendo a todos que querem comprar ou vender em Portugal." />
+          {/* ── DEPOIMENTOS (MARQUEE) ─────────────────────────────── */}
+          <section className="mt-12 space-y-4">
+            <h3 className="text-center text-[12px] font-black tracking-[0.3em] uppercase text-white/40 mb-6">O que dizem os clientes</h3>
+
+            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-3xl py-4">
+              <Marquee pauseOnHover className="[--duration:25s]">
+                {[
+                  { name: "Maria Fernandes", username: "@m_fernandes", body: "Excelente profissional, dedicada e muito transparente. Transmitiu-nos total confiança desde o primeiro dia!", img: "https://avatar.vercel.sh/maria" },
+                  { name: "João Ribeiro", username: "@j_ribeiro", body: "Profissionalismo acima de qualquer expectativa. Recomendo a todos que querem negociar em Portugal.", img: "https://avatar.vercel.sh/joao" },
+                  { name: "Ana Costa", username: "@anac_re", body: "A Eliane encontrou a casa dos meus sonhos em tempo recorde. Imbatível!", img: "https://avatar.vercel.sh/ana" },
+                ].map((review) => (
+                  <ReviewCard key={review.username} {...review} />
+                ))}
+              </Marquee>
+
+              <Marquee reverse pauseOnHover className="[--duration:30s] mt-2">
+                {[
+                  { name: "Ricardo Santos", username: "@rsantos_invest", body: "Como investidor, procuro agilidade e segurança. A Eliane entrega ambos com excelência.", img: "https://avatar.vercel.sh/ricardo" },
+                  { name: "Clara Martins", username: "@claram", body: "Atendimento humano e muito especializado. Senti-me acompanhada em cada detalhe da escritura.", img: "https://avatar.vercel.sh/clara" },
+                  { name: "Paulo Mendes", username: "@paulom_lx", body: "Melhor consultora RE/MAX com quem já trabalhei. Foco total no cliente.", img: "https://avatar.vercel.sh/paulo" },
+                ].map((review) => (
+                  <ReviewCard key={review.username} {...review} />
+                ))}
+              </Marquee>
+
+              {/* Gradients para suavizar as bordas */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[rgba(10,20,58,1)] to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[rgba(10,20,58,1)] to-transparent z-10" />
+            </div>
           </section>
 
           {/* ── SOCIAL + FOOTER ─────────────────────────── */}
