@@ -283,67 +283,65 @@ export default function App() {
             </p>
 
             {/* ── FOTO DA ELIANE — sobreposta em destaque ── */}
-            {/* Cartão de identidade por trás da foto */}
             <div className="relative mt-6 w-full">
               {/* Glow atrás da foto */}
               <div className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 h-72 w-72 rounded-full blur-3xl"
                 style={{ background: "radial-gradient(circle, rgba(0,48,135,0.5) 0%, transparent 70%)" }}
                 aria-hidden="true" />
 
-              {/* Cartão de fundo (identidade - modelo Cartão 3) */}
-              <div className="relative mx-auto rounded-[32px] pt-4 pb-6 px-5 text-center mt-44"
-                style={{
-                  background: "rgba(10,20,58,0.85)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(20px)",
-                  boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
-                }}>
+              {/* ── CARTÃO COM EFEITO 3D FLOAT EM TODO O QUADRANTE ── */}
+              <CardContainer className="w-full">
+                <CardBody className="relative w-full h-auto">
+                  {/* Cartão de fundo (identidade - modelo Cartão 3) */}
+                  <div className="relative mx-auto rounded-[32px] pt-4 pb-0 px-5 text-center mt-44"
+                    style={{
+                      background: "rgba(10,20,58,0.85)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(20px)",
+                      boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
+                    }}>
 
-                {/* ── FOTO DA MULHER (Eliane HQ) — COM EFEITO 3D FLOAT ──── */}
-                <CardContainer className="inter-var">
-                  <CardBody className="relative w-full flex justify-center mb-5 h-auto" style={{ marginTop: "-260px" }}>
-                    <CardItem translateZ="120" className="w-full flex justify-center">
+                    {/* ── FOTO DA MULHER (Eliane HQ) — COM EFEITO 3D MAIS ALTO ── */}
+                    <CardItem translateZ="100" className="relative w-full flex justify-center mb-5" style={{ marginTop: "-260px" }}>
                       <img
                         src="/images/eliane-hq.png"
                         alt="Eliane Lamarque"
                         className="h-[560px] max-w-none object-contain relative z-20 pointer-events-none"
                         style={{ filter: "drop-shadow(0 20px 50px rgba(0,0,0,0.8))" }}
                       />
+                      {/* Gradiente de fusão reforçado na base */}
+                      <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
                     </CardItem>
-                    {/* Gradiente de fusão reforçado na base */}
-                    <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
-                  </CardBody>
-                </CardContainer>
 
-                {/* Nome e informações */}
-                <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>
-                <p className="mt-1 text-[12px] font-bold tracking-[0.2em] uppercase" style={{ color: "#e8a020" }}>
-                  Consultora Imobiliária
-                </p>
-                <a href={callUrl} className="mt-2 block text-[17px] font-extrabold text-white/95 hover:text-white transition-colors">
-                  +351 913 663 154
-                </a>
+                    {/* Nome e informações com profundidade média */}
+                    <CardItem translateZ="60">
+                      <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>
+                      <p className="mt-1 text-[12px] font-bold tracking-[0.2em] uppercase" style={{ color: "#e8a020" }}>
+                        Consultora Imobiliária
+                      </p>
+                      <a href={callUrl} className="mt-2 block text-[17px] font-extrabold text-white/95 hover:text-white transition-colors">
+                        +351 913 663 154
+                      </a>
+                    </CardItem>
 
-                {/* Note: Stats removed here per user request */}
-
-                {/* Conteúdo inferior: Botões */}
-                <div className="px-5 pb-6">
-
-                  {/* Botões rápidos */}
-                  <div className="mt-4 flex gap-2.5">
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
-                      className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-[12px] font-bold text-white transition-all hover:scale-[1.03]"
-                      style={{ background: "linear-gradient(135deg,#25d366,#128c7e)", boxShadow: "0 4px 18px rgba(37,211,102,0.35)" }}>
-                      <WhatsAppIcon className="h-4 w-4" /> WhatsApp
-                    </a>
-                    <a href={callUrl}
-                      className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-[12px] font-bold text-white transition-all hover:scale-[1.03]"
-                      style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.15)" }}>
-                      <PhoneIcon className="h-4 w-4" /> Ligar
-                    </a>
+                    {/* Botões com profundidade menor para efeito de camadas */}
+                    <CardItem translateZ="40" className="px-5 pb-8 mt-6">
+                      <div className="flex gap-2.5">
+                        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+                          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-[12px] font-bold text-white transition-all hover:scale-[1.03]"
+                          style={{ background: "linear-gradient(135deg,#25d366,#128c7e)", boxShadow: "0 4px 18px rgba(37,211,102,0.35)" }}>
+                          <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+                        </a>
+                        <a href={callUrl}
+                          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-[12px] font-bold text-white transition-all hover:scale-[1.03]"
+                          style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}>
+                          <PhoneIcon className="h-4 w-4" /> Ligar
+                        </a>
+                      </div>
+                    </CardItem>
                   </div>
-                </div>
-              </div>
+                </CardBody>
+              </CardContainer>
             </div>
           </section>
 

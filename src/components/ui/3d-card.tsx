@@ -66,7 +66,7 @@ export const CardBody = ({
 }) => {
     return (
         <div
-            className={`h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d] ${className}`}
+            className={`[transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d] ${className}`}
         >
             {children}
         </div>
