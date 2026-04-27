@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "./lib/supabase";
+import { CardContainer, CardBody, CardItem } from "./components/ui/3d-card";
 
 /* ============================================================
    ELIANE LAMARQUE — Landing Page Premium · Layout Centrado
@@ -152,7 +153,7 @@ export default function App() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const whatsappUrl = "https://api.whatsapp.com/send/?phone=351913663154&text=Olá%2C+gostaria+de+conhecer+imóveis&type=phone_number&app_absent=0";
+  const whatsappUrl = `https://wa.me/351913663154?text=${encodeURIComponent("Olá! *consultora Eliane* Gostaria de mais informações sobre seus serviços.🤝")}`;
   const callUrl = "tel:+351913663154";
   const instagramUrl = "https://www.instagram.com/ecristinalamarque?igsh=MTEwYnFyenBhdGZhaA%3D%3D";
   const facebookUrl = "https://www.facebook.com/";
@@ -163,28 +164,62 @@ export default function App() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (sending) return;
     setSending(true);
 
     try {
-      const { error } = await supabase
-        .from('leads')
-        .insert([
-          {
-            nome: form.name,
-            telefone: form.phone,
-            email: form.email,
-            interesse: form.interest
-          }
-        ]);
+      const interestMap = {
+        comprar: "🏠 Quero comprar um imóvel",
+        vender: "💰 Quero vender o meu imóvel",
+        arrendar: "🔑 Quero arrendar",
+        investir: "📈 Quero investir em imóveis",
+      };
 
-      if (error) throw error;
+      const selectedInterest = interestMap[form.interest as keyof typeof interestMap] || form.interest;
 
+      // 1. Tentar salvar no Supabase (silencioso para não bloquear o WhatsApp se falhar)
+      try {
+        const { error: supabaseError } = await supabase
+          .from('leads')
+          .insert([
+            {
+              nome: form.name,
+              telefone: form.phone,
+              email: form.email,
+              interesse: selectedInterest
+            }
+          ]);
+        if (supabaseError) console.error('Aviso Supabase:', supabaseError);
+      } catch (dbErr) {
+        console.error('Erro ao conectar ao banco:', dbErr);
+      }
+
+      // 2. Preparar e enviar para o WhatsApp (Ação Principal)
+      const message = `Olá Eliane! Novo contacto do site:
+*Nome:* ${form.name}
+*Telemóvel:* ${form.phone}
+*E-mail:* ${form.email}
+*Interesse:* ${selectedInterest}`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappLink = `https://wa.me/351913663154?text=${encodedMessage}`;
+
+      // 3. Feedback visual
       setSent(true);
       setForm({ name: "", phone: "", email: "", interest: "comprar" });
+
+      // 4. Abrir WhatsApp (Prioridade)
+      const newWindow = window.open(whatsappLink, '_blank');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        window.location.href = whatsappLink;
+      }
+
       setTimeout(() => setSent(false), 4000);
     } catch (err) {
-      console.error('Erro ao salvar lead:', err);
-      // Opcional: Adicionar um toast de erro aqui se desejar
+      console.error('Erro crítico no formulário:', err);
+      // Fallback final caso tudo dê errado
+      const fallbackUrl = `https://wa.me/351913663154`;
+      window.location.href = fallbackUrl;
     } finally {
       setSending(false);
     }
@@ -264,17 +299,21 @@ export default function App() {
                   boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
                 }}>
 
-                {/* ── FOTO DA MULHER (Eliane HQ) — GIGANTE E COM FORTE POP-OUT ── */}
-                <div className="relative w-full flex justify-center mb-5" style={{ marginTop: "-260px" }}>
-                  <img
-                    src="/images/eliane-hq.png"
-                    alt="Eliane Lamarque"
-                    className="h-[560px] max-w-none object-contain relative z-20 pointer-events-none"
-                    style={{ filter: "drop-shadow(0 20px 50px rgba(0,0,0,0.8))" }}
-                  />
-                  {/* Gradiente de fusão reforçado na base para unificar a imagem com o cartão */}
-                  <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
-                </div>
+                {/* ── FOTO DA MULHER (Eliane HQ) — COM EFEITO 3D FLOAT ──── */}
+                <CardContainer className="inter-var">
+                  <CardBody className="relative w-full flex justify-center mb-5 h-auto" style={{ marginTop: "-260px" }}>
+                    <CardItem translateZ="120" className="w-full flex justify-center">
+                      <img
+                        src="/images/eliane-hq.png"
+                        alt="Eliane Lamarque"
+                        className="h-[560px] max-w-none object-contain relative z-20 pointer-events-none"
+                        style={{ filter: "drop-shadow(0 20px 50px rgba(0,0,0,0.8))" }}
+                      />
+                    </CardItem>
+                    {/* Gradiente de fusão reforçado na base */}
+                    <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
+                  </CardBody>
+                </CardContainer>
 
                 {/* Nome e informações */}
                 <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>

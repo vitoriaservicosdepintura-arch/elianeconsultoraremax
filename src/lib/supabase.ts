@@ -4,7 +4,11 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables');
+    console.warn('Supabase environment variables are missing. Lead capture will not work.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Fallback are added just to avoid initialization errors, but real keys are injected via Vercel/Env
+export const supabase = createClient(
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseAnonKey || 'placeholder'
+);
