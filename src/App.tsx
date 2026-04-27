@@ -588,36 +588,6 @@ export default function App() {
             </div>
           </section>
 
-          {/* ── DEPOIMENTOS (MARQUEE) ─────────────────────────────── */}
-          <section className="mt-12 space-y-4">
-            <h3 className="text-center text-[12px] font-black tracking-[0.3em] uppercase text-white/40 mb-6">O que dizem os clientes</h3>
-
-            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-3xl py-4">
-              <Marquee pauseOnHover className="[--duration:25s]">
-                {[
-                  { name: "Maria Fernandes", username: "@m_fernandes", body: "Excelente profissional, dedicada e muito transparente. Transmitiu-nos total confiança desde o primeiro dia!", img: "https://avatar.vercel.sh/maria" },
-                  { name: "João Ribeiro", username: "@j_ribeiro", body: "Profissionalismo acima de qualquer expectativa. Recomendo a todos que querem negociar em Portugal.", img: "https://avatar.vercel.sh/joao" },
-                  { name: "Ana Costa", username: "@anac_re", body: "A Eliane encontrou a casa dos meus sonhos em tempo recorde. Imbatível!", img: "https://avatar.vercel.sh/ana" },
-                ].map((review) => (
-                  <ReviewCard key={review.username} {...review} />
-                ))}
-              </Marquee>
-
-              <Marquee reverse pauseOnHover className="[--duration:30s] mt-2">
-                {[
-                  { name: "Ricardo Santos", username: "@rsantos_invest", body: "Como investidor, procuro agilidade e segurança. A Eliane entrega ambos com excelência.", img: "https://avatar.vercel.sh/ricardo" },
-                  { name: "Clara Martins", username: "@claram", body: "Atendimento humano e muito especializado. Senti-me acompanhada em cada detalhe da escritura.", img: "https://avatar.vercel.sh/clara" },
-                  { name: "Paulo Mendes", username: "@paulom_lx", body: "Melhor consultora RE/MAX com quem já trabalhei. Foco total no cliente.", img: "https://avatar.vercel.sh/paulo" },
-                ].map((review) => (
-                  <ReviewCard key={review.username} {...review} />
-                ))}
-              </Marquee>
-
-              {/* Gradients para suavizar as bordas */}
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[rgba(10,20,58,1)] to-transparent z-10" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[rgba(10,20,58,1)] to-transparent z-10" />
-            </div>
-          </section>
 
           {/* ── SOCIAL + FOOTER ─────────────────────────── */}
           <footer className="mt-8 flex flex-col items-center gap-3">
