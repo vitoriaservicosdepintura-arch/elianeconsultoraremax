@@ -183,7 +183,7 @@ function FloatingSocials() {
   ];
 
   return (
-    <div className="absolute left-[-60px] top-80 z-50 hidden flex-col gap-6 md:flex">
+    <div className="absolute left-[-50px] md:left-[-60px] top-40 md:top-80 z-50 flex flex-col gap-4 md:gap-6">
       {socials.map((s, i) => (
         <a
           key={i}
@@ -431,7 +431,7 @@ export default function App() {
       {/* ══════════════════════════════════════════════════
           COLUNA CENTRAL ÚNICA — tudo centralizado
       ══════════════════════════════════════════════════ */}
-      <main className="relative z-10 flex flex-col items-center px-4 pt-10 pb-16">
+      <main className="relative z-10 flex flex-col items-center pl-[56px] pr-4 md:px-4 pt-10 pb-16">
         <div className="w-full max-w-[420px]">
 
           {/* ── SECÇÃO 1: Hero com foto sobreposta ──────── */}
@@ -482,9 +482,8 @@ export default function App() {
                         <div className="absolute bottom-0 left-0 w-full h-28 z-30 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,20,58,0.95) 0%, rgba(10,20,58,0.4) 50%, transparent 100%)" }} />
                       </CardItem>
 
-                      {/* Nome e informações com profundidade média - Agora com efeito Announcement e Moving Border */}
-                      <CardItem translateZ="60" className="flex justify-center">
-                        <Announcement movingBorder className="min-w-[280px]">
+                      <CardItem translateZ="60" className="flex w-full justify-center">
+                        <Announcement movingBorder className="w-[90%] md:min-w-[280px]">
                           <AnnouncementTitle>
                             <h2 className="text-3xl font-black tracking-wide text-white">Eliane Lamarque</h2>
                           </AnnouncementTitle>
