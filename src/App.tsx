@@ -155,7 +155,7 @@ function FloatingSocials() {
   ];
 
   return (
-    <div className="absolute left-[-60px] top-44 z-50 hidden flex-col gap-6 md:flex">
+    <div className="absolute left-[-60px] top-80 z-50 hidden flex-col gap-6 md:flex">
       {socials.map((s, i) => (
         <a
           key={i}
