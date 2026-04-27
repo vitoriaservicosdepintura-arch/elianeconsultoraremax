@@ -145,6 +145,40 @@ function Toast({ visible }: { visible: boolean }) {
   );
 }
 
+// ── Floating Social ──────────────────────────────────────── */
+function FloatingSocials() {
+  const socials = [
+    { icon: <FacebookIcon className="h-5 w-5" />, url: "https://www.facebook.com/share/18oqgRVXVG/" },
+    { icon: <InstagramIcon className="h-5 w-5" />, url: "https://www.instagram.com/ecristinalamarque?igsh=MTEwYnFyenBhdGZhaA==" },
+    { icon: <MailIcon className="h-5 w-5" />, url: "mailto:elianelamarque@remax.pt" },
+    { icon: <GlobeIcon className="h-5 w-5" />, url: "https://remax.pt/pt/agente/eliane-lamarque/126421029" },
+  ];
+
+  return (
+    <div className="absolute left-[-60px] top-44 z-50 hidden flex-col gap-6 md:flex">
+      {socials.map((s, i) => (
+        <a
+          key={i}
+          href={s.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-120"
+          style={{
+            background: "rgba(255,255,255,0.05)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            backdropFilter: "blur(10px)",
+            animation: `float ${4 + i * 0.5}s ease-in-out infinite`,
+          }}
+        >
+          <div className="text-white/40 group-hover:text-white transition-colors">
+            {s.icon}
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 /* ============================================================
    MAIN APP
    ============================================================ */
@@ -284,6 +318,7 @@ export default function App() {
 
             {/* ── FOTO DA ELIANE — sobreposta em destaque ── */}
             <div className="relative mt-6 w-full">
+              <FloatingSocials />
               {/* Glow atrás da foto */}
               <div className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 h-72 w-72 rounded-full blur-3xl"
                 style={{ background: "radial-gradient(circle, rgba(0,48,135,0.5) 0%, transparent 70%)" }}
@@ -432,20 +467,6 @@ export default function App() {
 
           {/* ── SOCIAL + FOOTER ─────────────────────────── */}
           <footer className="mt-8 flex flex-col items-center gap-3">
-            <div className="flex items-center gap-5">
-              <a href="https://www.facebook.com/share/18oqgRVXVG/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/35 hover:text-white transition-colors">
-                <FacebookIcon className="h-5 w-5" />
-              </a>
-              <a href="https://www.instagram.com/ecristinalamarque?igsh=MTEwYnFyenBhdGZhaA==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/35 hover:text-white transition-colors">
-                <InstagramIcon className="h-5 w-5" />
-              </a>
-              <a href="mailto:elianelamarque@remax.pt" aria-label="Email" className="text-white/35 hover:text-white transition-colors">
-                <MailIcon className="h-5 w-5" />
-              </a>
-              <a href="https://remax.pt/pt/agente/eliane-lamarque/126421029" target="_blank" rel="noopener noreferrer" aria-label="Website RE/MAX" className="text-white/35 hover:text-white transition-colors">
-                <GlobeIcon className="h-5 w-5" />
-              </a>
-            </div>
             <p className="text-center text-[10px] tracking-widest text-white/20">
               © 2025 Eliane Lamarque · RE/MAX Dinâmica Daire
             </p>
