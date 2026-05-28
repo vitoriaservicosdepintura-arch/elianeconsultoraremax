@@ -316,25 +316,61 @@ export const LeadBot: React.FC = () => {
     /* ── Render ─────────────────────────────────────────────── */
     return (
         <>
-            {/* Botão flutuante */}
-            <button
-                id="leadbot-toggle"
-                onClick={() => setIsOpen(prev => !prev)}
-                onMouseEnter={() => setIsHoveringBtn(true)}
-                onMouseLeave={() => setIsHoveringBtn(false)}
-                aria-label="Abrir assistente virtual"
-                className={`fixed bottom-6 right-6 z-[9999] w-24 h-24 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'text-white shadow-2xl' : ''}`}
-                style={isOpen ? { background: 'linear-gradient(135deg, #cc0000, #8b0000)', boxShadow: '0 8px 32px rgba(204,0,0,0.5)' } : { background: 'transparent' }}
-            >
-                {isOpen
-                    ? <svg viewBox="0 0 24 24" className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                    : <>
-                        <img src="/images/eliane-hq-chatbot.png" alt="Assistente" className="w-[150%] h-[150%] max-w-none object-contain drop-shadow-2xl absolute transition-all duration-300" style={{ opacity: isHoveringBtn ? 0 : 1, transform: isHoveringBtn ? 'scale(0.9)' : 'scale(1)' }} />
-                        <img src="/images/eliane-hq-chatbot-2.png" alt="Assistente hover" className="w-[150%] h-[150%] max-w-none object-contain drop-shadow-2xl absolute transition-all duration-300" style={{ opacity: isHoveringBtn ? 1 : 0, transform: isHoveringBtn ? 'scale(1)' : 'scale(0.9)' }} />
-                    </>
-                }
-                {hasNewMessage && !isOpen && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-400 border-2 border-white animate-ping" />}
-            </button>
+            {/* Botão flutuante - Vídeo Assistente */}
+            <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-center gap-1.5">
+                {/* Label badge */}
+                {!isOpen && (
+                    <div
+                        className="text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-lg tracking-wider"
+                        style={{ background: 'linear-gradient(135deg, #cc0000, #8b0000)', boxShadow: '0 2px 12px rgba(204,0,0,0.5)' }}
+                    >
+                        💬 Assistente Online
+                    </div>
+                )}
+                <button
+                    id="leadbot-toggle"
+                    onClick={() => setIsOpen(prev => !prev)}
+                    onMouseEnter={() => setIsHoveringBtn(true)}
+                    onMouseLeave={() => setIsHoveringBtn(false)}
+                    aria-label="Abrir assistente virtual"
+                    className="relative w-24 h-24 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center rounded-full"
+                    style={{ filter: 'drop-shadow(0 8px 24px rgba(204,0,0,0.55))' }}
+                >
+                    {isOpen ? (
+                        <div className="w-24 h-24 rounded-full flex items-center justify-center text-white"
+                            style={{ background: 'linear-gradient(135deg, #cc0000, #8b0000)', boxShadow: '0 8px 32px rgba(204,0,0,0.5)' }}>
+                            <svg viewBox="0 0 24 24" className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </div>
+                    ) : (
+                        <>
+                            {/* Anel pulsante externo */}
+                            <span className="absolute inset-[-4px] rounded-full animate-ping"
+                                style={{ background: 'rgba(204,0,0,0.2)', animationDuration: '2s' }} />
+                            {/* Anel gradiente vermelho/azul do tema */}
+                            <span className="absolute inset-0 rounded-full"
+                                style={{ background: 'linear-gradient(135deg, #cc0000, #0a143a, #cc0000)' }} />
+                            {/* Vídeo circular recortado */}
+                            <video
+                                src="/images/video-eliane2.mp4"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                className="absolute inset-[3px] rounded-full object-cover"
+                                style={{ width: 'calc(100% - 6px)', height: 'calc(100% - 6px)', transform: isHoveringBtn ? 'scale(1.06)' : 'scale(1)', transition: 'transform 0.3s ease' }}
+                            />
+                            {/* Reflexo brilho no topo */}
+                            <span className="absolute inset-[3px] rounded-full pointer-events-none"
+                                style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.18) 0%, transparent 55%)', transition: 'opacity 0.3s', opacity: isHoveringBtn ? 0 : 1 }} />
+                        </>
+                    )}
+                    {hasNewMessage && !isOpen && (
+                        <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-green-400 border-2 border-white animate-ping" />
+                    )}
+                </button>
+            </div>
 
             {/* Janela do chat */}
             <div
